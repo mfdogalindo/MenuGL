@@ -10,7 +10,6 @@
 
 #include "../../libs/HTTPRequest.hpp"
 #include "../../libs/json.hpp"
-#include <stdio.h>
 #include <iostream>
 #include <fstream>
 

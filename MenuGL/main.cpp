@@ -14,14 +14,12 @@ int main(int argc, const char * argv[]) {
         return -1;
     }
     
-    std::string url = std::string{argv[1]};
-    HTTPClient client;
+    AppConfiguration appConfig;
+    appConfig.setApiUrl(std::string{argv[1]});
     
-    int status = client.get(url);
-    if(status == HTTP_GET_OK){
-        nlohmann::json data = client.getData();
-        std::cout << data;
-    }
+    ContentManager* contentManager = new ContentManager(&appConfig);
+
+    contentManager->getHome();
     
     return 0;
 }

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		64878E5F2993EB16002C9C28 /* APIClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64878E5D2993EB16002C9C28 /* APIClient.cpp */; };
+		64878E642993F709002C9C28 /* Home.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64878E622993F709002C9C28 /* Home.cpp */; };
+		64878E682993FAD8002C9C28 /* ContentManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64878E662993FAD8002C9C28 /* ContentManager.cpp */; };
+		64878E6B2994023F002C9C28 /* AppConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64878E692994023F002C9C28 /* AppConfiguration.cpp */; };
 		64D9BE68299310D900E156CD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64D9BE67299310D900E156CD /* main.cpp */; };
 		64D9BE76299315E700E156CD /* HTTPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64D9BE74299315E700E156CD /* HTTPClient.cpp */; };
 /* End PBXBuildFile section */
@@ -24,6 +28,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		64878E5D2993EB16002C9C28 /* APIClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = APIClient.cpp; sourceTree = "<group>"; };
+		64878E5E2993EB16002C9C28 /* APIClient.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = APIClient.hpp; sourceTree = "<group>"; };
+		64878E622993F709002C9C28 /* Home.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Home.cpp; sourceTree = "<group>"; };
+		64878E632993F709002C9C28 /* Home.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Home.hpp; sourceTree = "<group>"; };
+		64878E662993FAD8002C9C28 /* ContentManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ContentManager.cpp; sourceTree = "<group>"; };
+		64878E672993FAD8002C9C28 /* ContentManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ContentManager.hpp; sourceTree = "<group>"; };
+		64878E692994023F002C9C28 /* AppConfiguration.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AppConfiguration.cpp; sourceTree = "<group>"; };
+		64878E6A2994023F002C9C28 /* AppConfiguration.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AppConfiguration.hpp; sourceTree = "<group>"; };
+		64878E6C299402CC002C9C28 /* Services.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Services.h; sourceTree = "<group>"; };
 		64D9BE64299310D900E156CD /* MenuGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MenuGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		64D9BE67299310D900E156CD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		64D9BE702993152800E156CD /* HTTPRequest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HTTPRequest.hpp; sourceTree = "<group>"; };
@@ -44,6 +57,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		64878E602993F140002C9C28 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				64D9BE74299315E700E156CD /* HTTPClient.cpp */,
+				64D9BE75299315E700E156CD /* HTTPClient.hpp */,
+				64878E5D2993EB16002C9C28 /* APIClient.cpp */,
+				64878E5E2993EB16002C9C28 /* APIClient.hpp */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		64878E612993F243002C9C28 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				64878E622993F709002C9C28 /* Home.cpp */,
+				64878E632993F709002C9C28 /* Home.hpp */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		64878E652993FAC7002C9C28 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				64878E662993FAD8002C9C28 /* ContentManager.cpp */,
+				64878E672993FAD8002C9C28 /* ContentManager.hpp */,
+				64878E692994023F002C9C28 /* AppConfiguration.cpp */,
+				64878E6A2994023F002C9C28 /* AppConfiguration.hpp */,
+				64878E6C299402CC002C9C28 /* Services.h */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		64D9BE5B299310D800E156CD = {
 			isa = PBXGroup;
 			children = (
@@ -83,18 +128,11 @@
 		64D9BE6F299314DB00E156CD /* src */ = {
 			isa = PBXGroup;
 			children = (
-				64D9BE73299315BF00E156CD /* HTTPClient */,
+				64878E652993FAC7002C9C28 /* Services */,
+				64878E612993F243002C9C28 /* Models */,
+				64878E602993F140002C9C28 /* API */,
 			);
 			path = src;
-			sourceTree = "<group>";
-		};
-		64D9BE73299315BF00E156CD /* HTTPClient */ = {
-			isa = PBXGroup;
-			children = (
-				64D9BE74299315E700E156CD /* HTTPClient.cpp */,
-				64D9BE75299315E700E156CD /* HTTPClient.hpp */,
-			);
-			path = HTTPClient;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,7 +193,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				64D9BE76299315E700E156CD /* HTTPClient.cpp in Sources */,
+				64878E682993FAD8002C9C28 /* ContentManager.cpp in Sources */,
+				64878E6B2994023F002C9C28 /* AppConfiguration.cpp in Sources */,
 				64D9BE68299310D900E156CD /* main.cpp in Sources */,
+				64878E642993F709002C9C28 /* Home.cpp in Sources */,
+				64878E5F2993EB16002C9C28 /* APIClient.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
