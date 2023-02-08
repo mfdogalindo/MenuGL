@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		64D9BE68299310D900E156CD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64D9BE67299310D900E156CD /* main.cpp */; };
+		64D9BE76299315E700E156CD /* HTTPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64D9BE74299315E700E156CD /* HTTPClient.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,11 @@
 /* Begin PBXFileReference section */
 		64D9BE64299310D900E156CD /* MenuGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MenuGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		64D9BE67299310D900E156CD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		64D9BE702993152800E156CD /* HTTPRequest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HTTPRequest.hpp; sourceTree = "<group>"; };
+		64D9BE712993154400E156CD /* main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = main.hpp; sourceTree = "<group>"; };
+		64D9BE74299315E700E156CD /* HTTPClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HTTPClient.cpp; sourceTree = "<group>"; };
+		64D9BE75299315E700E156CD /* HTTPClient.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HTTPClient.hpp; sourceTree = "<group>"; };
+		64D9BE772993192400E156CD /* json.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = json.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +63,38 @@
 		64D9BE66299310D900E156CD /* MenuGL */ = {
 			isa = PBXGroup;
 			children = (
+				64D9BE6F299314DB00E156CD /* src */,
+				64D9BE6E299314D200E156CD /* libs */,
 				64D9BE67299310D900E156CD /* main.cpp */,
+				64D9BE712993154400E156CD /* main.hpp */,
 			);
 			path = MenuGL;
+			sourceTree = "<group>";
+		};
+		64D9BE6E299314D200E156CD /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				64D9BE772993192400E156CD /* json.hpp */,
+				64D9BE702993152800E156CD /* HTTPRequest.hpp */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		64D9BE6F299314DB00E156CD /* src */ = {
+			isa = PBXGroup;
+			children = (
+				64D9BE73299315BF00E156CD /* HTTPClient */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		64D9BE73299315BF00E156CD /* HTTPClient */ = {
+			isa = PBXGroup;
+			children = (
+				64D9BE74299315E700E156CD /* HTTPClient.cpp */,
+				64D9BE75299315E700E156CD /* HTTPClient.hpp */,
+			);
+			path = HTTPClient;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +154,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64D9BE76299315E700E156CD /* HTTPClient.cpp in Sources */,
 				64D9BE68299310D900E156CD /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
