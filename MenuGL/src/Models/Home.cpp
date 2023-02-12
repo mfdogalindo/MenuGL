@@ -59,18 +59,21 @@ String Home::toString()
 {
 
     String descriptor;
-    descriptor += String{"Title: "} + this->title + '\n';
+    descriptor += String{"\nTitle: "} + this->title + '\n';
 
     for (std::map<uint, ContainerElement>::iterator it = this->containersMap.begin(); it != this->containersMap.end(); ++it)
     {
-        descriptor += "Container [" + it->second.id + "]: " + it->second.name + " - Has related content: ";
+        descriptor += "******** Container [" + it->second.id + "]: " + it->second.name + "\n\tHas related content: ";
         descriptor += (it->second.hasRef) ? "yes\n" : "no\n";
 
         for (std::vector<uint>::iterator it2 = it->second.elementsIndex.begin(); it2 != it->second.elementsIndex.end(); ++it2)
         {
             ContentElement element = this->getElement(*it2);
-            descriptor += "\tContent [" + element.name + "] - Is a Movie : ";
+            descriptor += "\t--- Content [" + element.name + "]\n\t\tIs a Movie : ";
             descriptor += (element.isMovie) ? "yes\n" : "no\n";
+            descriptor += "\t\tImage: " + element.imageUrl + "\n";
+            descriptor += "\t\tDownloaded image: ";
+            descriptor += (element.hasImage) ? "yes\n" : "no\n";
         }
     }
 

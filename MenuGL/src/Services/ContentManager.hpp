@@ -15,7 +15,7 @@
 #include "../../libs/json.hpp"
 #include <vector>
 
-using json = nlohmann::json;
+using JSON = nlohmann::json;
 using ContainerVector = std::vector<uint>;
 
 class ContentManager{
@@ -24,8 +24,9 @@ class ContentManager{
         Home home;
         AppConfiguration* apiConfig;
         APIClient* apiClient;
-        ContainerVector setEmbeddedItems(json items);
+        ContainerVector setEmbeddedItems(JSON items);
         ContainerVector getItemsFromAPI(String refId);
+        ByteVector getImageBytes(String url);
 
     public:
         ContentManager(AppConfiguration* apiConfig);

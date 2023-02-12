@@ -13,13 +13,16 @@
 #include <map>
 
 using String = std::string;
+using ByteVector = std::vector<uint8_t>;
 
 typedef struct{
     uint index;
     String contentId;
     String collectionId;
     String name;
-    String image;
+    String imageUrl;
+    ByteVector imageBytes;
+    bool hasImage;
     String url;
     bool isMovie;
     bool isCollection;

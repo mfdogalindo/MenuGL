@@ -14,7 +14,26 @@ ContentManager::ContentManager(AppConfiguration* appConfig){
     this->apiClient = new APIClient(this->apiConfig->getApiUrl());
 }
 
-ContainerVector ContentManager::setEmbeddedItems(json items){
+ByteVector ContentManager::getImageBytes(String url){
+    return this->apiClient->getImage(url);
+}
+
+String getImageURL(JSON input){
+    String urlImage = "no_image";
+    
+    if(input["series"]["default"]["url"].is_string()){
+        urlImage = input["series"]["default"]["url"].get<String>();
+    }
+    else if(input["program"]["default"]["url"].is_string()){
+        urlImage = input["program"]["default"]["url"].get<String>();
+    }
+    else if(input["default"]["default"]["url"].is_string()){
+        urlImage = input["default"]["default"]["url"].get<String>();
+    }
+    return urlImage;
+}
+
+ContainerVector ContentManager::setEmbeddedItems(JSON items){
     ContainerVector vector;
     for(uint itemPos = 0; itemPos < items.size(); itemPos++){
         ContentElement element;
@@ -30,8 +49,10 @@ ContainerVector ContentManager::setEmbeddedItems(json items){
             element.name = items[itemPos]["text"]["title"]["full"]["collection"]["default"]["content"].get<String>();
         }
 
-        element.image = "video";
-        element.url = "http://www.google.com";
+        element.imageUrl = getImageURL(items[itemPos]["image"]["tile"]["0.71"]);
+        element.imageBytes = getImageBytes(element.imageUrl);
+        element.hasImage = element.imageBytes.size() > 0;
+        element.url = "www.url.com";
         
         uint indexNewElement = this->home.addElement(element);
         
@@ -42,8 +63,8 @@ ContainerVector ContentManager::setEmbeddedItems(json items){
 
 ContainerVector ContentManager::getItemsFromAPI(String refId){
     ContainerVector vector;
-    json refData = this->apiClient->getSet(refId);
-    json items;
+    JSON refData = this->apiClient->getSet(refId);
+    JSON items;
     if(refData["data"]["CuratedSet"]["items"].size()){
         items = refData["data"]["CuratedSet"]["items"];
     }
@@ -58,8 +79,9 @@ ContainerVector ContentManager::getItemsFromAPI(String refId){
 
 
 void ContentManager::getHome(){
-    json homeJson = this->apiClient->getHome();
-    json containers = homeJson["data"]["StandardCollection"]["containers"].get<std::vector<json>>();
+    std::cout << "Get home data... wait please\n";
+    JSON homeJson = this->apiClient->getHome();
+    JSON containers = homeJson["data"]["StandardCollection"]["containers"].get<std::vector<JSON>>();
     
     for(uint conPos = 0; conPos < containers.size(); conPos++){
         
@@ -74,7 +96,7 @@ void ContentManager::getHome(){
         }
         else{
             container.id = containers[conPos]["set"]["setId"].get<String>();
-            json jItems = containers[conPos]["set"]["items"].get<std::vector<json>>();
+            JSON jItems = containers[conPos]["set"]["items"].get<std::vector<JSON>>();
             container.elementsIndex = this->setEmbeddedItems(jItems);
         }
         

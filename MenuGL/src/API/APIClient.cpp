@@ -11,18 +11,30 @@ APIClient::APIClient(std::string url){
     this->url = url;
 }
 
-nlohmann::json APIClient::getHome(){
-    int status = client.get(url + "/home.json");
-    if(status == HTTP_GET_OK){
-        return client.getData();
+JSON APIClient::getHome(){
+    HTTPResponse<JSON> response = client.getJSON(url + "/home.json");
+    std::cout << ".";
+    if(response.getStatus() == HTTP_STATUS_OK){
+        return response.getData();
     }
     return 0;
 }
 
-nlohmann::json APIClient::getSet(std::string refId){
-    int status = client.get(url + "/sets/" + refId + ".json");
-    if(status == HTTP_GET_OK){
-        return client.getData();
+JSON APIClient::getSet(String refId){
+    HTTPResponse<JSON> response = client.getJSON(url + "/sets/" + refId + ".json");
+    std::cout << ".";
+    if(response.getStatus() == HTTP_STATUS_OK){
+        return response.getData();
     }
     return 0;
+}
+
+ByteVector APIClient::getImage(String url){
+    HTTPResponse<ByteVector> response = client.getImage(url);
+    std::cout << ".";
+    if(response.getStatus() == HTTP_STATUS_OK){
+        return response.getData();
+    }
+    ByteVector temp;
+    return temp;
 }

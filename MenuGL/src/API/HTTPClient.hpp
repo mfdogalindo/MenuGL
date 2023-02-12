@@ -8,22 +8,27 @@
 #ifndef HTTPClient_hpp
 #define HTTPClient_hpp
 
-#include "../../libs/HTTPRequest.hpp"
 #include "../../libs/json.hpp"
+#include "../Models/HTTPResponse.hpp"
+#include <curl/curl.h>
 #include <iostream>
-#include <fstream>
+#include <vector>
 
-#define HTTP_GET_OK 1
+#define HTTP_STATUS_OK 200
+#define HTTP_STATUS_NO_CONTENT 204
+
+using JSON = nlohmann::json;
+using String = std::string;
+using ByteVector = std::vector<uint8_t>;
 
 class HTTPClient {
     private:
-        nlohmann::json data;
-        int status;
+        CURL *curl;
+        CURLcode res;
     public:
         HTTPClient();
-        int get(std::string url);
-        nlohmann::json getData();
-        int currentStatus();
+        HTTPResponse<JSON> getJSON(std::string url);
+        HTTPResponse<ByteVector> getImage(std::string url);
 };
 
 #endif /* HTTPClient_hpp */

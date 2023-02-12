@@ -18,7 +18,8 @@ private:
 public:
     APIClient(std::string url);
     nlohmann::json getHome();
-    nlohmann::json getSet(std::string refId);
+    nlohmann::json getSet(String refId);
+    ByteVector getImage(String url);
 };
 
 #endif /* APIClient_hpp */

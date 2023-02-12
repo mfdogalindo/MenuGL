@@ -7,50 +7,63 @@
 
 #include "HTTPClient.hpp"
 
-HTTPClient::HTTPClient() {
-    HTTPClient::status = http::Status::NoContent;
+static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
+{
+    ((std::string*)userp)->append((char*)contents, size * nmemb);
+    return size * nmemb;
 }
 
-int HTTPClient::get(std::string url){
+HTTPClient::HTTPClient() {
+
+}
+
+HTTPResponse<JSON> HTTPClient::getJSON(std::string url){
     
     try{
+        String readBuffer;
+        JSON jsonOutput;
+        this->curl = curl_easy_init();
+        curl_easy_setopt(this->curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(this->curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(this->curl, CURLOPT_WRITEDATA, &readBuffer);
+        res = curl_easy_perform(this->curl);
+        int http_code = 0;
+        curl_easy_getinfo (this->curl, CURLINFO_RESPONSE_CODE, &http_code);
+        curl_easy_cleanup(this->curl);
         
-        std::string arguments;
-        auto protocol = http::InternetProtocol::v4;
-        nlohmann::json jsonOutput;
-        
-        http::Request request{url, protocol};
-        
-        const auto response = request.send("GET", arguments,{
-            {"Content-Type", "application/json"},
-            {"User-Agent", "runscope/0,1"},
-            {"Accept", "application/json"}
-        }, std::chrono::seconds(2));
-        
-        std::cout << response.status.reason << '\n';
-        
-        if(response.status.code == http::Status::Ok){
-            std::string responseStr = std::string{response.body.begin(), response.body.end()};
-
-            jsonOutput = nlohmann::json::parse(responseStr);
-            HTTPClient::data = jsonOutput;
+        ByteVector vec(readBuffer.begin(), readBuffer.end());
+        if(http_code == HTTP_STATUS_OK){
+            jsonOutput = JSON::parse(readBuffer);
         }
-        else {
-            HTTPClient::status = response.status.code;
-        }
-        return 1;
-    }
-    catch( const http::ResponseError& e){
-        std::cerr << "Request Error: " << e.what() << '\n';
-        return -2;
+        return HTTPResponse<JSON>(http_code, jsonOutput);
     }
     catch(const std::exception& e){
         std::cerr << "Error: " << e.what() << '\n';
-        return -1;
+        return HTTPResponse<JSON>(-1, 0);
     }
-    return 0;
+    return HTTPResponse<JSON>(0, 0);
 };
 
-nlohmann::json HTTPClient::getData() {
-    return this->data;
-}
+
+HTTPResponse<ByteVector> HTTPClient::getImage(String url){
+    ByteVector temp;
+    try{
+        String readBuffer;
+        this->curl = curl_easy_init();
+        curl_easy_setopt(this->curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(this->curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(this->curl, CURLOPT_WRITEDATA, &readBuffer);
+        res = curl_easy_perform(this->curl);
+        int http_code = 0;
+        curl_easy_getinfo (this->curl, CURLINFO_RESPONSE_CODE, &http_code);
+        curl_easy_cleanup(this->curl);
+        
+        ByteVector vec(readBuffer.begin(), readBuffer.end());
+        return HTTPResponse<ByteVector>(http_code, vec);
+    }
+    catch(const std::exception& e){
+        std::cerr << "Error: " << e.what() << '\n';
+        return HTTPResponse<ByteVector>(-1, temp);
+    }
+    return HTTPResponse<ByteVector>(0, temp);
+};
