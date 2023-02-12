@@ -7,15 +7,11 @@
 
 #include "ContentManager.hpp"
 #include <stdio.h>
+#include <thread>
 
 
 ContentManager::ContentManager(AppConfiguration* appConfig){
     this->apiConfig = appConfig;
-    this->apiClient = new APIClient(this->apiConfig->getApiUrl());
-}
-
-ByteVector ContentManager::getImageBytes(String url){
-    return this->apiClient->getImage(url);
 }
 
 String getImageURL(JSON input){
@@ -33,7 +29,7 @@ String getImageURL(JSON input){
     return urlImage;
 }
 
-ContainerVector ContentManager::setEmbeddedItems(JSON items){
+ContainerVector setEmbeddedItems(Home* home, JSON items){
     ContainerVector vector;
     for(uint itemPos = 0; itemPos < items.size(); itemPos++){
         ContentElement element;
@@ -50,20 +46,20 @@ ContainerVector ContentManager::setEmbeddedItems(JSON items){
         }
 
         element.imageUrl = getImageURL(items[itemPos]["image"]["tile"]["0.71"]);
-        element.imageBytes = getImageBytes(element.imageUrl);
+        element.imageBytes = APIClient("").getImage(element.imageUrl);
         element.hasImage = element.imageBytes.size() > 0;
         element.url = "www.url.com";
         
-        uint indexNewElement = this->home.addElement(element);
+        uint indexNewElement = home->addElement(element);
         
         vector.push_back(indexNewElement);
     }
     return vector;
 }
 
-ContainerVector ContentManager::getItemsFromAPI(String refId){
+ContainerVector getItemsFromAPI(Home* home, String url, String refId){
     ContainerVector vector;
-    JSON refData = this->apiClient->getSet(refId);
+    JSON refData = APIClient(url).getSet(refId);
     JSON items;
     if(refData["data"]["CuratedSet"]["items"].size()){
         items = refData["data"]["CuratedSet"]["items"];
@@ -74,38 +70,44 @@ ContainerVector ContentManager::getItemsFromAPI(String refId){
     else if(refData["data"]["TrendingSet"]["items"].size()){
         items = refData["data"]["TrendingSet"]["items"];
     }
-    return this->setEmbeddedItems(items);
+    return setEmbeddedItems(home, items);
+}
+
+void getContainers(Home* home, String url, int containerIndex, JSON jContainers ){
+    ContainerElement container;
+    container.hasRef = jContainers[containerIndex]["set"]["refId"].is_string();
+
+    container.name = jContainers[containerIndex]["set"]["text"]["title"]["full"]["set"]["default"]["content"].get<String>();
+    
+    if(container.hasRef){
+        container.id = jContainers[containerIndex]["set"]["refId"].get<String>();
+        container.elementsIndex = getItemsFromAPI(home, url, container.id);
+    }
+    else{
+        container.id = jContainers[containerIndex]["set"]["setId"].get<String>();
+        JSON jItems = jContainers[containerIndex]["set"]["items"].get<std::vector<JSON>>();
+        container.elementsIndex = setEmbeddedItems(home, jItems);
+    }
+    
+    home->addContainer(containerIndex, container);
 }
 
 
 void ContentManager::getHome(){
     std::cout << "Get home data... wait please\n";
-    JSON homeJson = this->apiClient->getHome();
+    JSON homeJson = APIClient(this->apiConfig->getApiUrl()).getHome();
     JSON containers = homeJson["data"]["StandardCollection"]["containers"].get<std::vector<JSON>>();
     
+    std::vector<std::thread> threads;
+    
     for(uint conPos = 0; conPos < containers.size(); conPos++){
-        
-        ContainerElement container;
-        container.hasRef = containers[conPos]["set"]["refId"].is_string();
-
-        container.name = containers[conPos]["set"]["text"]["title"]["full"]["set"]["default"]["content"].get<String>();
-        
-        if(container.hasRef){
-            container.id = containers[conPos]["set"]["refId"].get<String>();
-            container.elementsIndex = this->getItemsFromAPI(container.id);
-        }
-        else{
-            container.id = containers[conPos]["set"]["setId"].get<String>();
-            JSON jItems = containers[conPos]["set"]["items"].get<std::vector<JSON>>();
-            container.elementsIndex = this->setEmbeddedItems(jItems);
-        }
-        
-        this->home.addContainer(conPos, container);
+        threads.emplace_back(std::thread(getContainers,&this->home, this->apiConfig->getApiUrl(), conPos, containers));
     }
     
+    for (auto& th : threads)
+        th.join();
     
     this->home.setTitle("MenuFlix");
-
     
     std::cout <<  this->home.toString() << '\n';
     

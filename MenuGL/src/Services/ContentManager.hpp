@@ -23,11 +23,7 @@ class ContentManager{
     private:
         Home home;
         AppConfiguration* apiConfig;
-        APIClient* apiClient;
-        ContainerVector setEmbeddedItems(JSON items);
-        ContainerVector getItemsFromAPI(String refId);
-        ByteVector getImageBytes(String url);
-
+    
     public:
         ContentManager(AppConfiguration* apiConfig);
         void getHome();
