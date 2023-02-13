@@ -12,6 +12,7 @@
 
 ContentManager::ContentManager(AppConfiguration* appConfig){
     this->apiConfig = appConfig;
+    this->status = NO_CONTENT;
 }
 
 String getImageURL(JSON input){
@@ -111,4 +112,10 @@ void ContentManager::getHome(){
     
     std::cout <<  this->home.toString() << '\n';
     
+    this->status = CONTENT_OK;
+    
+}
+
+int ContentManager::getStatus(){
+    return this->status;
 }
