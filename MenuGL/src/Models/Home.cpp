@@ -55,6 +55,10 @@ void Home::addContainer(uint index, ContainerElement container)
     this->containersMap.insert(std::pair<uint, ContainerElement>(index, container));
 }
 
+std::map<uint, ContainerElement> Home::getContainers(){
+    return this->containersMap;
+}
+
 String Home::toString()
 {
 

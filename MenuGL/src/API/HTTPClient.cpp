@@ -26,6 +26,7 @@ HTTPResponse<JSON> HTTPClient::getJSON(std::string url){
         curl_easy_setopt(this->curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(this->curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(this->curl, CURLOPT_WRITEDATA, &readBuffer);
+        curl_easy_setopt(this->curl, CURLOPT_TIMEOUT, 3);
         res = curl_easy_perform(this->curl);
         int http_code = 0;
         curl_easy_getinfo (this->curl, CURLINFO_RESPONSE_CODE, &http_code);
@@ -35,6 +36,7 @@ HTTPResponse<JSON> HTTPClient::getJSON(std::string url){
         if(http_code == HTTP_STATUS_OK){
             jsonOutput = JSON::parse(readBuffer);
         }
+        curl_global_cleanup();
         return HTTPResponse<JSON>(http_code, jsonOutput);
     }
     catch(const std::exception& e){
@@ -53,12 +55,14 @@ HTTPResponse<ByteVector> HTTPClient::getImage(String url){
         curl_easy_setopt(this->curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(this->curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(this->curl, CURLOPT_WRITEDATA, &readBuffer);
+        curl_easy_setopt(this->curl, CURLOPT_TIMEOUT, 3);
         res = curl_easy_perform(this->curl);
         int http_code = 0;
         curl_easy_getinfo (this->curl, CURLINFO_RESPONSE_CODE, &http_code);
         curl_easy_cleanup(this->curl);
         
         ByteVector vec(readBuffer.begin(), readBuffer.end());
+        curl_global_cleanup();
         return HTTPResponse<ByteVector>(http_code, vec);
     }
     catch(const std::exception& e){

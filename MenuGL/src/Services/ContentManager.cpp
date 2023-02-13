@@ -93,8 +93,7 @@ void getContainers(Home* home, String url, int containerIndex, JSON jContainers 
     home->addContainer(containerIndex, container);
 }
 
-
-void ContentManager::getHome(){
+void ContentManager::getHomeContentFromServer(){
     std::cout << "Get home data... wait please\n";
     JSON homeJson = APIClient(this->apiConfig->getApiUrl()).getHome();
     JSON containers = homeJson["data"]["StandardCollection"]["containers"].get<std::vector<JSON>>();
@@ -108,12 +107,22 @@ void ContentManager::getHome(){
     for (auto& th : threads)
         th.join();
     
+    threads.clear();
+    threads.shrink_to_fit();
+    
     this->home.setTitle("MenuFlix");
     
     std::cout <<  this->home.toString() << '\n';
     
     this->status = CONTENT_OK;
-    
+}
+
+
+Home ContentManager::getHome(){
+    if(this->status == NO_CONTENT){
+        this->getHomeContentFromServer();
+    }
+    return this->home;
 }
 
 int ContentManager::getStatus(){

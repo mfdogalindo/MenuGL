@@ -27,11 +27,12 @@ class ContentManager{
         int status;
         Home home;
         AppConfiguration* apiConfig;
+        void getHomeContentFromServer();
     
     public:
         ContentManager(AppConfiguration* apiConfig);
-        void getHome();
-    int getStatus();
+        Home getHome();
+        int getStatus();
     
 };
 
