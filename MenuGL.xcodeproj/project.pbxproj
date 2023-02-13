@@ -10,6 +10,8 @@
 		645EAA6629987FFA00A29362 /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 645EAA6529987FFA00A29362 /* libcurl.tbd */; };
 		645EAA682999D4BA00A29362 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 645EAA672999D4BA00A29362 /* OpenGL.framework */; };
 		645EAA6A2999D4C000A29362 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 645EAA692999D4C000A29362 /* GLUT.framework */; };
+		6480385B299AF05E00D4D6B1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6480385A299AF05E00D4D6B1 /* CoreGraphics.framework */; };
+		6480385D299AF22700D4D6B1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6480385C299AF22700D4D6B1 /* CoreFoundation.framework */; };
 		64878E5F2993EB16002C9C28 /* APIClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64878E5D2993EB16002C9C28 /* APIClient.cpp */; };
 		64878E642993F709002C9C28 /* Home.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64878E622993F709002C9C28 /* Home.cpp */; };
 		64878E682993FAD8002C9C28 /* ContentManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64878E662993FAD8002C9C28 /* ContentManager.cpp */; };
@@ -35,6 +37,12 @@
 		645EAA6529987FFA00A29362 /* libcurl.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurl.tbd; path = usr/lib/libcurl.tbd; sourceTree = SDKROOT; };
 		645EAA672999D4BA00A29362 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		645EAA692999D4C000A29362 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		648037AF299ACEB700D4D6B1 /* Views.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Views.hpp; sourceTree = "<group>"; };
+		648037B4299AE4B100D4D6B1 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		648037B8299AE97C00D4D6B1 /* ViewEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewEvents.h; sourceTree = "<group>"; };
+		648037B9299AEA4000D4D6B1 /* CommonViews.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonViews.h; sourceTree = "<group>"; };
+		6480385A299AF05E00D4D6B1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		6480385C299AF22700D4D6B1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		64878E5D2993EB16002C9C28 /* APIClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = APIClient.cpp; sourceTree = "<group>"; };
 		64878E5E2993EB16002C9C28 /* APIClient.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = APIClient.hpp; sourceTree = "<group>"; };
 		64878E622993F709002C9C28 /* Home.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Home.cpp; sourceTree = "<group>"; };
@@ -57,6 +65,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6480385D299AF22700D4D6B1 /* CoreFoundation.framework in Frameworks */,
+				6480385B299AF05E00D4D6B1 /* CoreGraphics.framework in Frameworks */,
 				645EAA6A2999D4C000A29362 /* GLUT.framework in Frameworks */,
 				645EAA682999D4BA00A29362 /* OpenGL.framework in Frameworks */,
 				645EAA6629987FFA00A29362 /* libcurl.tbd in Frameworks */,
@@ -69,11 +79,24 @@
 		645EAA6429987FFA00A29362 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6480385C299AF22700D4D6B1 /* CoreFoundation.framework */,
+				6480385A299AF05E00D4D6B1 /* CoreGraphics.framework */,
 				645EAA692999D4C000A29362 /* GLUT.framework */,
 				645EAA672999D4BA00A29362 /* OpenGL.framework */,
 				645EAA6529987FFA00A29362 /* libcurl.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		648037AE299ACE9400D4D6B1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				648037AF299ACEB700D4D6B1 /* Views.hpp */,
+				648037B4299AE4B100D4D6B1 /* Common.h */,
+				648037B8299AE97C00D4D6B1 /* ViewEvents.h */,
+				648037B9299AEA4000D4D6B1 /* CommonViews.h */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		64878E602993F140002C9C28 /* API */ = {
@@ -148,6 +171,7 @@
 		64D9BE6F299314DB00E156CD /* src */ = {
 			isa = PBXGroup;
 			children = (
+				648037AE299ACE9400D4D6B1 /* Views */,
 				64878E652993FAC7002C9C28 /* Services */,
 				64878E612993F243002C9C28 /* Models */,
 				64878E602993F140002C9C28 /* API */,

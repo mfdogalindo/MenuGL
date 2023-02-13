@@ -56,6 +56,7 @@ class Home{
  
         void addContainer(uint index, ContainerElement container);
         std::map<uint, ContainerElement> getContainers();
+        ContainerElement getContainer(uint index);
     
         String toString();
 

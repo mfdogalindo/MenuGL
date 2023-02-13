@@ -59,6 +59,10 @@ std::map<uint, ContainerElement> Home::getContainers(){
     return this->containersMap;
 }
 
+ContainerElement Home::getContainer(uint index){
+    return this->containersMap[index];
+}
+
 String Home::toString()
 {
 
